@@ -14,7 +14,7 @@ import org.springframework.stereotype.Service;
 import java.util.UUID;
 
 @Service("iUserService")
-public class IUserServiceImpl implements IUserService{
+public class UserServiceImpl implements IUserService{
 
     @Autowired
     private UserMapper userMapper;
@@ -158,6 +158,14 @@ public class IUserServiceImpl implements IUserService{
         }
         user.setPassword(StringUtils.EMPTY);
         return ServerResponse.createBySuccess(user);
+    }
+
+
+    public ServerResponse checkAdminRole(User user) {
+        if (user != null && user.getRole() == Const.Role.ROLE_ADMIN) {
+            return ServerResponse.createBySuccess();
+        }
+        return ServerResponse.createByError();
     }
 
 }
